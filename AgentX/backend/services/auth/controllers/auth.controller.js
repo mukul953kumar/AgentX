@@ -44,3 +44,18 @@ export const login = async (req, res)=>{
         return res.status(500).json({success:false,message:"Internal server error"})
     }
 }
+
+export const logout = async (req,res)=>{
+    try{
+        const sessionId=req.cookies?.session
+        await redis.del(`session-${sessionId}`)
+
+        res.clearCookie("session")
+
+        return res.json({success:true,message:"User logged out successfully"})
+
+    }catch(error){
+        console.log("Failed to logout:", error);
+        return res.status(500).json({success:false,message:"Internal server error"})
+    }
+}
