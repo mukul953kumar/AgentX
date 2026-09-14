@@ -26,6 +26,24 @@ export const getConversation = async (req,res)=>{
     }
 }
 
+export const updateConversation = async (req,res)=>{
+    try{
+       const {id,title}=req.body
+       const conversation = await Conversation.findByIdAndUpdate(id,{
+        title:title
+       },{
+        new:true
+       })
+       if(!conversation){
+        return res.status(404).json({success:false,message:"Conversation not found"})
+       }
+        return res.status(201).json({success:true,conversations})
+    }catch(error){
+        console.log("error updating conversation",error)
+        return res.status(500).json({success:false,message:"error updating conversation"})
+    }
+}
+
 
 export const saveMessage=async (req,res) => {
     try{
