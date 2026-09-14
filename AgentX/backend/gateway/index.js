@@ -6,17 +6,20 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import protect from "./middleware/auth.middleware.js"
 import getCurrentUser from "./controllers/user.controllers.js"
+import { proxyWIthHeader } from "./utils/proxyWithHeader.js"
 const port = process.env.PORT
 
 const app = express()
 app.use(cors({
-    origin:process.env.FRONTEND_URL,
-    credentials:true
+    origin: process.env.FRONTEND_URL,
+    credentials: true
 }))
 
 app.use(cookieParser())
 app.use("/api/auth", proxy(process.env.AUTH_SERVICE))
-app.get("/api/me",protect,getCurrentUser)
+app.use("/api/chat", proxyWIthHeader(process.env.CHAT_SERVICE))
+app.get("/api/me", protect, getCurrentUser)
+
 
 app.get("/", (req, res) => {
     res.json({ message: "hello from gateway" })
