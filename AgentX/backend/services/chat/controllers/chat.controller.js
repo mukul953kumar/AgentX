@@ -27,4 +27,15 @@ export const getConversation = async (req,res)=>{
 }
 
 
-export cos
+export const saveMessage=async (req,res) => {
+    try{
+        const {conversationId,role,content}=req.body
+        const message = await Message.create({
+            conversationId,
+            role,
+            content,
+        })
+    }catch(error){
+       return res.status(500).json({success:false,message:"error saving message"})
+    }
+}
