@@ -1,7 +1,7 @@
 import { getModel } from "../config/llmModels"
 
 export const router = async (state) => {
-    const llm = getModel("router")
+    const llm = await getModel("router")
     const prompt =`
     You are a router for AI agents.
     Based on the user's prompt, decide which agent should handle the request.
