@@ -1,3 +1,6 @@
+import Conversation from "../models/conversation.model.js"
+import Message from "../models/message.model.js"
+
 export const createConversation = async (req,res)=>{
     try{
         const userId=req.headers["x-user-id"]
@@ -37,7 +40,7 @@ export const updateConversation = async (req,res)=>{
        if(!conversation){
         return res.status(404).json({success:false,message:"Conversation not found"})
        }
-        return res.status(201).json({success:true,conversations})
+        return res.status(200).json({success:true,conversation})
     }catch(error){
         console.log("error updating conversation",error)
         return res.status(500).json({success:false,message:"error updating conversation"})
